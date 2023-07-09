@@ -1,13 +1,35 @@
 import React, { useState, useEffect, createContext } from "react";
 import ApiRequests, {Requests} from "src/utils/api"
 
-export const CartContext = createContext({});
+export const CartContext: React.Context<Object> = createContext<Object>({} as Object)
 
 interface CartProps {
   children?: React.ReactNode
 }
 
-interface Items {
+export interface CartContextTypes{
+  cart: Array<any>;
+  setCart: React.Dispatch<React.SetStateAction<Array<any>>>;
+  totalItems: number;
+  setTotalItems: React.Dispatch<React.SetStateAction<number>>;
+  subTotals: Array<Object>;
+  setSubTotals: React.Dispatch<React.SetStateAction<Array<Object>>>;
+  total: number;
+  setTotal: React.Dispatch<React.SetStateAction<number>>;
+  sumAllItems: () => void;
+  updateCart: (id: number, quantity: number) => void;
+  calculateCartTotal: () => Promise<{ subtotals: Array<any>, total: number }>; // Ajuste na assinatura
+  handleItemQuantityChange: (id: number, quantity: number) => void;
+  handleDeleteItem: (id: number) => void;
+  clearLocalStorage: () => void;
+}
+
+interface Values {
+  subtotals: Array<any>
+  total: number
+}
+
+export interface Item {
   id: number
   title: string
   price: number
@@ -35,68 +57,98 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     localStorage.setItem("shoppingCart", JSON.stringify({ cart, totalItems, subTotals, total }));
   }, [cart, totalItems, subTotals, total]);
 
-  async function handleItemQuantityChange(id: number, quantity: number) {
-    let exists:boolean = false;
+  function handleItemQuantityChange(id: number, quantity: number) {
+    let exists: boolean = false;
     let newItem = cart.map((item) => {
       if (item.id === id) {
         exists = true;
-        return { id: item.id, quantity: quantity };
+        return { ...item, quantity, price: item.price };
       }
       return item;
     });
     if (!exists && quantity > 0) {
-      newItem = [...newItem, { id: id, quantity: quantity }];
+      const item = cart.find((item) => item.id === id);
+      if (item) {
+        newItem = [...newItem, { ...item, quantity }];
+      }
     }
     setCart(newItem);
   }
 
-  async function sumAllItems() {
+  function sumAllItems() {
     const value = cart.reduce((sum, item:any) => sum + item.quantity, 0);
     setTotalItems(value);
   }
 
-  async function calculateCartTotal() {
-    const uniqueIds = [...new Set(cart.map((item) => item.id))];
+  // async function calculateCartTotal() {
+  //   const uniqueIds = [...new Set(cart.map((item) => item.id))];
+  //   let subtotals = [];
+  //   let total = 0;
+  //   for (const id of uniqueIds) {
+  //     const item = await ApiRequests.getItemsById(id);
+  //     const itemTotal =
+  //       item.price * cart.find((item) => item.id === id).quantity;
+  //     subtotals.push({ id: item.id, subtotal: itemTotal });
+  //     total += itemTotal;
+  //   }
+  //   return { subtotals, total };
+  // }
+
+  function calculateCartTotal(cart:Array<Item>) {
     let subtotals = [];
     let total = 0;
-    for (const id of uniqueIds) {
-      const item = await ApiRequests.getItemsById(id);
-      const itemTotal =
-        item.price * cart.find((item) => item.id === id).quantity;
+  
+    for (const item of cart) {
+      const itemTotal = item.price * item.quantity;
       subtotals.push({ id: item.id, subtotal: itemTotal });
       total += itemTotal;
     }
+  
     return { subtotals, total };
   }
 
-  async function updateCart(id: number, quantity: number) {
-    let newItem:any = [...cart];
-    const index = newItem.findIndex((item) => item.id === id);
-    if (index === -1) {
-      newItem.push({ id, quantity });
+  function updateCart(item: Item, quantity: number) {
+    const id = item.id;
+    const existingItem = cart.find((cartItem: Item) => cartItem.id === id);
+  
+    if (existingItem) {
+      const updatedCart = cart.map((cartItem: Item) => {
+        if (cartItem.id === id) {
+          return { ...cartItem, quantity: cartItem.quantity + quantity };
+        }
+        return cartItem;
+      });
+      setCart(updatedCart);
     } else {
-      if (newItem[index].quantity + quantity === 0) {
-        newItem = newItem.filter((item) => item.id !== id);
-      } else {
-        newItem[index].quantity += quantity;
-      }
+      const newItem = { ...item, quantity: 1 };
+      setCart([...cart, newItem]);
     }
-    setCart(newItem);
-    const { subtotals, total } = await calculateCartTotal();
-    setSubTotals(subtotals);
-    setTotal(total);
   }
 
-  async function handleDeleteItem(id: number) {
+  useEffect(()=>{
+    const { subtotals, total } = calculateCartTotal(cart)
+    setSubTotals(subtotals)
+    setTotal(total)
+    sumAllItems()
+  },[cart])
+
+  function handleDeleteItem(id: number) {
     setCart(cart.filter((item) => item.id !== id));
   }
 
-  async function clearLocalStorage() {
+  function clearLocalStorage() {
     localStorage.removeItem("cart");
     localStorage.removeItem("totalItems");
     localStorage.removeItem("subTotals");
     localStorage.removeItem("total");
   }
+
+  useEffect(()=>{
+    console.log("cart: ", cart)
+    console.log("totalItems: ", totalItems)
+    console.log("subTotals: ", subTotals)
+    console.log("total: ", total)
+  },[cart, totalItems, subTotals, total])
 
   const cartState = {
     cart,

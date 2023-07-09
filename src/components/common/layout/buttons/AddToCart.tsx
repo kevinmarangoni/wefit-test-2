@@ -3,7 +3,19 @@ import styled from "styled-components";
 import Image from "next/image"
 import addToCartIcon from "/src/assets/images/addToCartIcon.svg"
 
-export const AddToCart = ({
+interface AddToCartProps {
+  children?: React.ReactNode;
+  width?: number;
+  height?: number;
+  onClick?: () => void;
+  textColor?: string;
+  backgroundColor?: string;
+  colorOnHover?: string;
+  colorOnActive?: string;
+  quantitytInCart?: number | null;
+}
+
+export const AddToCart: React.FC<AddToCartProps> = ({
     children,
     width,
     height,

@@ -1,10 +1,29 @@
-import React from "react";
+import React,{useContext, useEffect, useState} from "react";
 import styled from "styled-components";
 import Image from "next/image";
+import {CartContext, CartContextTypes, Item as ItemInterface} from "src/context/Cart"
 
-import AddToCart from "/src/components/common/layout/buttons/AddToCart";
+import {Theme} from "src/theme/theme"
+
+import AddToCart from "src/components/common/layout/buttons/AddToCart";
 
 export const Item = ({ item }) => {
+
+  const context = useContext<any>(CartContext)
+  const [quantity, setQuantity] = useState<number>(0)
+
+  const {cart, updateCart} = context
+
+  function getItemQuantityById(id: number): number {
+    const item = cart.find((cartItem: ItemInterface) => cartItem.id === id);
+    return item ? item.quantity : 0;
+  }
+
+  useEffect(()=>{
+    let value = getItemQuantityById(item.id)
+    setQuantity(value)
+  },[cart])
+
   return (
     <Container>
       <Content>
@@ -20,7 +39,7 @@ export const Item = ({ item }) => {
         </MovieDetailes>
         <PriceDetails>
           <p>R$ {item.price.toFixed(2).toString().replace(".", ",")}</p>
-          <AddToCart>ADICIONAR AO CARRINHO</AddToCart>
+          <AddToCart onClick={()=>updateCart(item, 1)} quantitytInCart={quantity} >ADICIONAR AO CARRINHO</AddToCart>
         </PriceDetails>
       </Content>
     </Container>

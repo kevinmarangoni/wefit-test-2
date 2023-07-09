@@ -26,7 +26,7 @@ class ApiRequests implements Requests {
   async getItemsById(id: number) {
     try {
         const data = await axios.get(`${API_PATH}?id=${id}`).then((res) =>{
-          return res.data
+          return res.data[0]
         })
         .catch((err) => {
           console.log(`error at retrieving product by id: `, err)

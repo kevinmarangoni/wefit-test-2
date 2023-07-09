@@ -1,14 +1,22 @@
 import {useEffect, useState} from "react";
-import ItemCard from "/src/components/common/layout/cards/Item";
+import ItemCard from "src/components/common/layout/cards/Item";
 import styled from "styled-components";
 
-import Spinner from "/src/components/common/layout/Spinner";
+import Spinner from "src/components/common/layout/Spinner";
 
-import ApiRequests from "/src/utils/api.js"
+import ApiRequests from "src/utils/api"
 
-const Body = () => {
-  const [data, setData] = useState([])
-  const [hasFetch, setHasFetch] = useState(false)
+interface Items {
+  id: number
+  title: string
+  price: number
+  image: string
+  quantity: number
+}
+
+const Body:React.FC = () => {
+  const [data, setData] = useState<Array<Items>>([])
+  const [hasFetch, setHasFetch] = useState<Boolean>(false)
 
   const getInitialList = async () => {
     const response = await ApiRequests.getAllItems()
