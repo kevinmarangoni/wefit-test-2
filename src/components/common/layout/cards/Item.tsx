@@ -1,5 +1,5 @@
 import React,{useContext, useEffect, useState} from "react";
-import styled from "styled-components";
+import styled,{ThemeContext} from "styled-components";
 import Image from "next/image";
 import {CartContext, CartContextTypes, Item as ItemInterface} from "src/context/Cart"
 
@@ -8,7 +8,7 @@ import {Theme} from "src/theme/theme"
 import AddToCart from "src/components/common/layout/buttons/AddToCart";
 
 export const Item = ({ item }) => {
-
+  const theme = useContext(ThemeContext)
   const context = useContext<any>(CartContext)
   const [quantity, setQuantity] = useState<number>(0)
 
@@ -18,6 +18,7 @@ export const Item = ({ item }) => {
     const item = cart.find((cartItem: ItemInterface) => cartItem.id === id);
     return item ? item.quantity : 0;
   }
+  console.log(theme)
 
   useEffect(()=>{
     let value = getItemQuantityById(item.id)
@@ -39,7 +40,7 @@ export const Item = ({ item }) => {
         </MovieDetailes>
         <PriceDetails>
           <p>R$ {item.price.toFixed(2).toString().replace(".", ",")}</p>
-          <AddToCart onClick={()=>updateCart(item, 1)} quantitytInCart={quantity} >ADICIONAR AO CARRINHO</AddToCart>
+          <AddToCart onClick={()=>updateCart(item, 1)} quantitytInCart={quantity} backgroundColor={quantity >= 1 ? theme.color.highlight.selected : theme.color.highlight.main}>{quantity >= 1 ? "ITEM ADICIONADO" : "ADICIONAR AO CARRINHO"}</AddToCart> 
         </PriceDetails>
       </Content>
     </Container>
@@ -56,6 +57,9 @@ const Container = styled.div`
   p {
     color: ${(props) => props.theme.color.font.secondary};
     font-weight: 700;
+  }
+  @media (max-width: 768px) {
+    width: 100%;
   }
 `;
 

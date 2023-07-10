@@ -53,6 +53,7 @@ export const dark = {
       main: "#009EDD",
       lighter: "#5EB4E7",
       darker: "#007BB3",
+      selected:"#039B00",
     },
     font: {
       primary: "#fff",
