@@ -42,19 +42,46 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
   const [totalItems, setTotalItems] = useState<number>(0);
   const [subTotals, setSubTotals] = useState<Array<Object>>([]);
   const [total, setTotal] = useState<number>(0);
+  const [allow, setAllow] = useState<boolean>(false);
   
+  // useEffect(() => {
+  //   const shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
+  //   if (shoppingCart) {
+  //     setCart(shoppingCart.cart);
+  //     setTotalItems(shoppingCart.totalItems);
+  //     setSubTotals(shoppingCart.subTotals);
+  //     setTotal(shoppingCart.total);
+  //   }
+  // }, []);
+
   useEffect(() => {
-    const shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
-    if (shoppingCart) {
-      setCart(shoppingCart.cart);
-      setTotalItems(shoppingCart.totalItems);
-      setSubTotals(shoppingCart.subTotals);
-      setTotal(shoppingCart.total);
+    const existingCart = JSON.parse(localStorage.getItem("shoppingCart"));
+  
+    if (existingCart) {
+      setCart(existingCart.cart);
+      setTotalItems(existingCart.totalItems);
+      setSubTotals(existingCart.subTotals);
+      setTotal(existingCart.total);
+    } else {
+      const initialData = {
+        cart: [],
+        totalItems: 0,
+        subTotals: [],
+        total: 0
+      };
+      localStorage.setItem("shoppingCart", JSON.stringify(initialData));
+      setCart(initialData.cart);
+      setTotalItems(initialData.totalItems);
+      setSubTotals(initialData.subTotals);
+      setTotal(initialData.total);
     }
+    setAllow(true)
   }, []);
   
   useEffect(() => {
-    localStorage.setItem("shoppingCart", JSON.stringify({ cart, totalItems, subTotals, total }));
+    if(allow){
+      localStorage.setItem("shoppingCart", JSON.stringify({ cart, totalItems, subTotals, total }));
+    }
   }, [cart, totalItems, subTotals, total]);
 
   function handleItemQuantityChange(id: number, quantity: number) {

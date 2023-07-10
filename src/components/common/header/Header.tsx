@@ -1,6 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 
+import CartButton from 'src/components/common/layout/buttons/CartButton'
+
 interface HeaderProps {
   children?: React.ReactNode;
 }
@@ -12,7 +14,7 @@ const Header:React.FC<HeaderProps> = () => {
         <Logo>
           <h1>WeMovies</h1>
         </Logo>
-        <Cart>Meu Carrinho</Cart>
+        <CartButton/>
       </Content>
     </Container>
   )
