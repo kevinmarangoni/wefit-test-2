@@ -3,7 +3,7 @@ import styled from "styled-components";
 import Image from "next/image"
 import CartIcon from "src/assets/images/cartIcon.svg"
 import {useRouter} from "next/router";
-import {useWindowSize} from '@uidotdev/usehooks'
+import {useWindowSize} from 'usehooks-ts'
 
 import {CartContext, CartContextTypes} from "src/context/Cart"
 

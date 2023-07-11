@@ -1,11 +1,17 @@
 import React from 'react'
 import styled from "styled-components";
 import Image from 'next/image'
+import Button from 'src/components/common/layout/buttons/Button'
+import sucessLottie from 'src/assets/images/sucessLottie.svg'
+
 
 const Body = () => {
   return (
     <Container>
       <Content>
+        <h1>Compra Realizada com sucesso!</h1>
+        <Image src={sucessLottie} alt={`success image`} width={295} height={307} />
+        <Button><p>VOLTAR</p></Button>
       </Content>
     </Container>
 
@@ -28,35 +34,15 @@ const Content = styled.div`
   height: fit-content;
   min-height: 630px;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 11px;
-`;
-
-const CartContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px;
-  h3 {
-
-    margin-bottom: 20px;
-  }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    th,
-    td {
-      border: 1px solid #ddd;
-      padding: 8px;
-      text-align: left;
-    }
-    th {
-      background-color: #ddd;
-    }
-  }
-  h4 {
-    margin-top: 20px;
+  gap: 32px;
+  h1{
+    color: #2F2E41;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
   }
 `;

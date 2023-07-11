@@ -48,7 +48,6 @@ const Button:React.FC<ButtonProps> = ({
     outline: none;
     border: none;
     transition: all ease-in-out 0.2s;
-    color: ${(props) => props.theme.color.font.primary};
     font-size: ${(props) => props.theme.color.font.size.m};
     font-weight: 700;
     :hover {
@@ -59,5 +58,8 @@ const Button:React.FC<ButtonProps> = ({
     }
     @media screen and (max-width: 768px) {
     width: 100%;
+    }
+    p{
+      color: ${(props) => props.theme.color.font.primary};
     }
   `;
