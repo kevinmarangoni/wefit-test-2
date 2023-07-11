@@ -1,10 +1,11 @@
 import axios from "axios";
 const API_PATH = "http://localhost:3001/products";
+import { Item } from "src/types/Item.d";
 
 export interface Requests {
-  getAllItems(): Promise<Array<Object>>
-  getItemsById(id: number): Promise<Array<Object>>
-  getItemByTitle(title: string): Promise<Array<Object>>
+  getAllItems(): Promise<Array<Item>>
+  getItemsById(id: number): Promise<Array<Item>>
+  getItemByTitle(title: string): Promise<Array<Item>>
 }
 
 class ApiRequests implements Requests {
