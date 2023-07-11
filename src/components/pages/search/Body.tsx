@@ -51,7 +51,7 @@ const Body: React.FC = () => {
                 <div>{data.length} {data.length > 1 ? "resultados encontrados." : "resultado encontrado."}</div>
               </ResultContainer>
             }
-          <ItemList>
+          <ItemList dataFound={data.length > 0}>
             {hasFetch && data.length > 0 ? (
               <>
                 {data.length > 0 &&
@@ -89,8 +89,8 @@ margin-bottom: 24px;
 const ItemList = styled.div`
   height: 630px;
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: ${(props:any) => (props.dataFound ? 'flex-start' : 'center')};
+  align-items: ${(props:any) => (props.dataFound ? 'flex-start' : 'center')};
   flex-wrap: wrap;
   gap: 11px;
 `;
@@ -99,7 +99,7 @@ const ResultContainer = styled.div`
   margin-bottom: 24px;
   display: flex;
   justify-content: space-between;
-
+  flex-wrap: wrap;
   p{
     font-size: 16px;
     font-style: normal;

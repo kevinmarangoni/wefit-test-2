@@ -7,8 +7,6 @@ import {useRouter} from "next/router";
 import styled from "styled-components";
 import { Item } from "src/types/Item.d";
 
-import ApiRequests from "src/utils/api";
-
 interface Props {
     data?: Array<Item>
     setData?(response: Array<Item>): void

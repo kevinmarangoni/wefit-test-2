@@ -3,10 +3,10 @@ import styled from "styled-components";
 import Image from "next/image";
 
 
-const CartItemCard = () => {
+const CartItem = () => {
   return (
     <div>CartItemCard</div>
   )
 }
 
-export default CartItemCard
+export default CartItem

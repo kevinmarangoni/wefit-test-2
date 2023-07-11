@@ -1,9 +1,9 @@
 import React from 'react'
 import Header from 'src/components/common/header/Header'
-import Body from 'src/components/pages/cart/Body'
+import Body from 'src/components/pages/confirmation/Body'
 import Layout from 'src/components/common/layout/Layout'
 
-const Cart:React.FC = () => {
+const Confirmation:React.FC = () => {
 
   return (
     <Layout>
@@ -13,4 +13,4 @@ const Cart:React.FC = () => {
   )
 }
 
-export default Cart
+export default Confirmation

@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from "react";
 import ApiRequests, {Requests} from "src/utils/api"
 
-export const CartContext: React.Context<Object> = createContext<Object>({} as Object)
+export const CartContext: React.Context<Object> = createContext<CartContextTypes>({} as CartContextTypes)
 
 interface CartProps {
   children?: React.ReactNode
@@ -43,16 +43,6 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
   const [subTotals, setSubTotals] = useState<Array<Object>>([]);
   const [total, setTotal] = useState<number>(0);
   const [allow, setAllow] = useState<boolean>(false);
-  
-  // useEffect(() => {
-  //   const shoppingCart = JSON.parse(localStorage.getItem("shoppingCart"));
-  //   if (shoppingCart) {
-  //     setCart(shoppingCart.cart);
-  //     setTotalItems(shoppingCart.totalItems);
-  //     setSubTotals(shoppingCart.subTotals);
-  //     setTotal(shoppingCart.total);
-  //   }
-  // }, []);
 
   useEffect(() => {
     const existingCart = JSON.parse(localStorage.getItem("shoppingCart"));
@@ -106,20 +96,6 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     const value = cart.reduce((sum, item:any) => sum + item.quantity, 0);
     setTotalItems(value);
   }
-
-  // async function calculateCartTotal() {
-  //   const uniqueIds = [...new Set(cart.map((item) => item.id))];
-  //   let subtotals = [];
-  //   let total = 0;
-  //   for (const id of uniqueIds) {
-  //     const item = await ApiRequests.getItemsById(id);
-  //     const itemTotal =
-  //       item.price * cart.find((item) => item.id === id).quantity;
-  //     subtotals.push({ id: item.id, subtotal: itemTotal });
-  //     total += itemTotal;
-  //   }
-  //   return { subtotals, total };
-  // }
 
   function calculateCartTotal(cart:Array<Item>) {
     let subtotals = [];
