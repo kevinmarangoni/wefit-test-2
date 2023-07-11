@@ -19,8 +19,7 @@ const Container = styled.div`
 `
 
 const Content = styled.div`
-  width: 738px;
+  width: 960px;
   display: flex;
   flex-direction: column;
-  gap: 40px;
 `

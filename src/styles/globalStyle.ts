@@ -9,6 +9,7 @@ interface GlobalStyleProps {
 export const GlobalStyle = createGlobalStyle<GlobalStyleProps>`
     
     *{
+        //border: 1px dashed red;
         padding: 0;
         margin: 0;
         box-sizing: border-box;

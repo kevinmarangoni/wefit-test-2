@@ -170,12 +170,12 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     localStorage.removeItem("total");
   }
 
-  useEffect(()=>{
-    console.log("cart: ", cart)
-    console.log("totalItems: ", totalItems)
-    console.log("subTotals: ", subTotals)
-    console.log("total: ", total)
-  },[cart, totalItems, subTotals, total])
+  // useEffect(()=>{
+  //   console.log("cart: ", cart)
+  //   console.log("totalItems: ", totalItems)
+  //   console.log("subTotals: ", subTotals)
+  //   console.log("total: ", total)
+  // },[cart, totalItems, subTotals, total])
 
   const cartState = {
     cart,

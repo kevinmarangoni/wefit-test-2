@@ -23,7 +23,7 @@ const Header:React.FC<HeaderProps> = () => {
 export default Header
 
 const Container = styled.div`
-  height: 72px;
+  height: 63px;
   padding: 12px;
 `
 

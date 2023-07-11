@@ -18,7 +18,6 @@ export const Item = ({ item }) => {
     const item = cart.find((cartItem: ItemInterface) => cartItem.id === id);
     return item ? item.quantity : 0;
   }
-  console.log(theme)
 
   useEffect(()=>{
     let value = getItemQuantityById(item.id)
@@ -50,7 +49,7 @@ export const Item = ({ item }) => {
 const Container = styled.div`
   background-color: ${(props) =>
     props.backgroundColor ?? props.theme.color.secondary.main};
-  width: ${(props) => props.width ?? "230px"};
+  width: ${(props) => props.width ?? "305px"};
   height: ${(props) => props.height ?? "300px"};
   border-radius: 4px;
   padding: 10px;
@@ -79,6 +78,8 @@ const MovieDetailes = styled.div`
   gap: 7;
   p {
     text-align: center;
+    font-size: 12px;
+    font-style: normal;
     font-weight: 700;
   }
 `;
@@ -87,6 +88,14 @@ const PriceDetails = styled.div`
   display: flex;
   flex-direction: column;
   gap: 8px;
+  width: 100%;
+  align-items:center;
+  p{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+  }
 `;
 
 export default Item;

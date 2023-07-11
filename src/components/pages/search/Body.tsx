@@ -4,39 +4,53 @@ import styled from "styled-components";
 import SearchBar from "src/components/common/layout/functional/SearchBar"
 import ApiRequests from "src/utils/api";
 import { Item } from "src/types/Item.d";
+import {useRouter} from "next/router";
 
 import Spinner from "src/components/common/layout/Spinner";
 
-
 const Body: React.FC = () => {
+  const router = useRouter()
+  const {query} = router.query
   const [data, setData] = useState<Array<Item>>([]);
   const [hasFetch, setHasFetch] = useState<Boolean>(false);
+  const [searchQuery, setSearchQuery] = useState<String>('');
 
   const getInitialList = async () => {
-    const response = await ApiRequests.getAllItems();
+    if (query == undefined){
+      return
+    }
+    setSearchQuery(decodeURIComponent(query))
+    console.log(query)
+    const response = await ApiRequests.getItemByTitle(decodeURIComponent(query));
     setData(response);
     if (data) {
       setHasFetch(true);
     }
   };
 
-  useEffect(() => {
-    console.log(hasFetch, data);
-  }, [hasFetch, data]);
+
 
   useEffect(() => {
-    if (!hasFetch) {
+  if (!hasFetch) {
       getInitialList();
     }
-  }, [hasFetch]);
+  }, [hasFetch, query, searchQuery]);
+
+
 
   return (
     <>
       <Container>
         <Content>
           <SearchContainer>
-            <SearchBar />
+            <SearchBar data={data} setData={setData}/>
           </SearchContainer>
+            {data.length > 0 &&  
+              <ResultContainer>
+                <p>Exibindo resultados para "{searchQuery}"</p>
+                <div>{data.length} {data.length > 1 ? "resultados encontrados." : "resultado encontrado."}</div>
+              </ResultContainer>
+            }
           <ItemList>
             {hasFetch && data.length > 0 ? (
               <>
@@ -64,7 +78,8 @@ const Container = styled.div`
   padding-top: 0;
 `;
 
-const Content = styled.div``;
+const Content = styled.div`
+`;
 
 const SearchContainer = styled.div`
 margin-top: 24px;
@@ -74,8 +89,26 @@ margin-bottom: 24px;
 const ItemList = styled.div`
   height: 630px;
   display: flex;
-  justify-content: center;
-  align-items: center;
+  justify-content: flex-start;
+  align-items: flex-start;
   flex-wrap: wrap;
   gap: 11px;
 `;
+
+const ResultContainer = styled.div`
+  margin-bottom: 24px;
+  display: flex;
+  justify-content: space-between;
+
+  p{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+  }
+
+  div{
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+  }
+`

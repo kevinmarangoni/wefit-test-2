@@ -50,7 +50,7 @@ export const AddToCart: React.FC<AddToCartProps> = ({
 
   const Element = styled.button`
   background-color: ${(props) => props.backgroundColor ?? props.theme.color.highlight.main};
-  width: ${(props) => props.width ?? "207px"};
+  width: ${(props) => props.width ?? "100%"};
   height: ${(props) => props.height ?? "40px"};
   border-radius: 4px;
   outline: none;
