@@ -19,7 +19,7 @@ interface Props {
 const SearchBar: React.FC<Props> = ({data, setData, setHasFetch, hasFetch}) => {
     const router = useRouter()
     const [searchField, setSearchField] = useState<string>("");
-    const [filteredItemsQuantity, setFilteredItemsQuantity] = useState<number>(0);
+    const [focused, setFocused] = useState<boolean>(false);
 
     const handleSearch = async () => {
         if (searchField == ""){
@@ -30,23 +30,11 @@ const SearchBar: React.FC<Props> = ({data, setData, setHasFetch, hasFetch}) => {
         }
       }
 
-      const calculateFilteredArraySize = () => {
-        if (data) {
-          const size = data.length;
-          setFilteredItemsQuantity(size);
-        } else {
-          setFilteredItemsQuantity(0);
-        }
-      };
-
-      
-  const getFilteredList = async () => {
-    const response = await ApiRequests.getItemByTitle(searchField);
-    setData(response);
-    if (data) {
-      setHasFetch(true);
+  const executeEnterKeySearch = async(e:any)=>{
+    if(e.key === "Enter" && focused){
+      await handleSearch()
     }
-  };
+  }
 
   return (
     <Container>
@@ -57,6 +45,9 @@ const SearchBar: React.FC<Props> = ({data, setData, setHasFetch, hasFetch}) => {
         onChange={(e) => {
           setSearchField(e.target.value);
         }}
+        onKeyDown={(e)=>{executeEnterKeySearch(e)}}
+        onFocus={()=>{setFocused(true)}}
+        onBlur={()=>{setFocused(false)}}
       ></input>
       <button
         onClick={handleSearch}

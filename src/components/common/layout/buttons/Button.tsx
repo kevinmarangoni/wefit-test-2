@@ -1,7 +1,18 @@
 import React from "react";
 import styled from "styled-components";
 
-const Button = ({
+interface ButtonProps {
+  children?: React.ReactNode;
+  width?: number;
+  height?: number;
+  onClick?: () => void;
+  textColor?: string;
+  backgroundColor?: string;
+  colorOnHover?: string;
+  colorOnActive?: string;
+}
+
+const Button:React.FC<ButtonProps> = ({
     children,
     width,
     height,

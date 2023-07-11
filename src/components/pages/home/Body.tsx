@@ -10,7 +10,7 @@ import Spinner from "src/components/common/layout/Spinner";
 
 const Body: React.FC = () => {
   const [data, setData] = useState<Array<Item>>([]);
-  const [hasFetch, setHasFetch] = useState<Boolean>(false);
+  const [hasFetch, setHasFetch] = useState<boolean>(false);
 
   const getInitialList = async () => {
     const response = await ApiRequests.getAllItems();
@@ -35,7 +35,7 @@ const Body: React.FC = () => {
       <Container>
         <Content>
           <SearchContainer>
-            <SearchBar />
+            <SearchBar data={data} setData={setData} hasFetch={hasFetch} setHasFetch={setHasFetch}/>
           </SearchContainer>
           <ItemList>
             {hasFetch && data.length > 0 ? (
