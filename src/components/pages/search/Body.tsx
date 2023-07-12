@@ -9,45 +9,41 @@ import {useRouter} from "next/router";
 import Spinner from "src/components/common/layout/Spinner";
 
 const Body: React.FC = () => {
-  const router = useRouter()
-  const {query} = router.query
+  const router = useRouter();
+  const { query } = router.query;
   const [data, setData] = useState<Array<Item>>([]);
-  const [hasFetch, setHasFetch] = useState<Boolean>(false);
+  const [hasFetch, setHasFetch] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>('');
 
   const getInitialList = async () => {
-    if (query == undefined){
-      return
-    }
-    setSearchQuery(decodeURIComponent(query as string))
-    const response = await ApiRequests.getItemByTitle(decodeURIComponent(query as string));
-    setData(response);
-    if (data) {
+    if (query !== undefined) {
+      const decodedQuery = decodeURIComponent(query as string);
+      setSearchQuery(decodedQuery);
+      const response = await ApiRequests.getItemByTitle(decodedQuery);
+      setData(response);
       setHasFetch(true);
     }
   };
 
   useEffect(() => {
-  if (!hasFetch) {
-      getInitialList();
-    }
-  }, [hasFetch, query, searchQuery]);
+    getInitialList();
+  }, [query]);
 
   return (
     <>
       <Container>
         <Content>
           <SearchContainer>
-            <SearchBar data={data} setData={setData}/>
+            <SearchBar data={data} setData={setData} setHasFetch={setHasFetch} setSearchQuery={setSearchQuery} />
           </SearchContainer>
-            {data.length > 0 &&  
-              <ResultContainer>
-                <p>Exibindo resultados para "{searchQuery}"</p>
-                <div>{data.length} {data.length > 1 ? "resultados encontrados." : "resultado encontrado."}</div>
-              </ResultContainer>
-            }
+          {data.length > 0 && (
+            <ResultContainer>
+              <p>Exibindo resultados para "{searchQuery}"</p>
+              <div>{data.length} {data.length > 1 ? "resultados encontrados." : "resultado encontrado."}</div>
+            </ResultContainer>
+          )}
           <ItemList dataFound={data.length > 0}>
-            {hasFetch && data.length > 0 ? (
+            {hasFetch ? (
               <>
                 {data.length > 0 &&
                   data.map((item, index) => {
@@ -65,7 +61,6 @@ const Body: React.FC = () => {
     </>
   );
 };
-
 export default Body;
 
 const Container = styled.div`

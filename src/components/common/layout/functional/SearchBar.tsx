@@ -12,56 +12,53 @@ interface Props {
     setData?(response: Array<Item>): void
     setHasFetch?(fetch: boolean): void
     hasFetch?: boolean
+    setSearchQuery?(query: string): void
 }
 
-const SearchBar: React.FC<Props> = ({data, setData, setHasFetch, hasFetch}) => {
-    const router = useRouter()
-    const [searchField, setSearchField] = useState<string>("");
-    const [focused, setFocused] = useState<boolean>(false);
+const SearchBar: React.FC<Props> = ({ data, setData, setHasFetch, setSearchQuery }) => {
+  const router = useRouter();
+  const [searchField, setSearchField] = useState<string>("");
+  const [focused, setFocused] = useState<boolean>(false);
 
-    const handleSearch = async () => {
-        if (searchField == ""){
-            router.push(`/`)
-        }
-        else{
-            router.push(`/search?query=${searchField}`)
-        }
-      }
-
-  const executeEnterKeySearch = async(e:any)=>{
-    if(e.key === "Enter" && focused){
-      await handleSearch()
+  const handleSearch = async () => {
+    if (searchField === "") {
+      router.push(`/`);
+    } else {
+      router.push(`/search?query=${searchField}`);
     }
-  }
+  };
+
+  const executeEnterKeySearch = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && focused) {
+      await handleSearch();
+    }
+  };
 
   return (
     <Container>
-    <Content>
-      <input
-        type={"text"}
-        placeholder="Buscar filme pelo nome"
-        onChange={(e) => {
-          setSearchField(e.target.value);
-        }}
-        onKeyDown={(e)=>{executeEnterKeySearch(e)}}
-        onFocus={()=>{setFocused(true)}}
-        onBlur={()=>{setFocused(false)}}
-      ></input>
-      <button
-        onClick={handleSearch}
-        >
-        <Image
-          alt={"search icon"}
-          src={searchIcon} //searchField.length >= 1 ? closeIcon : searchIcon
-          width={24}
-          height={24}
+      <Content>
+        <input
+          type="text"
+          placeholder="Buscar filme pelo nome"
+          value={searchField}
+          onChange={(e) => {
+            setSearchField(e.target.value);
+          }}
+          onKeyDown={executeEnterKeySearch}
+          onFocus={() => {
+            setFocused(true);
+          }}
+          onBlur={() => {
+            setFocused(false);
+          }}
         />
-      </button>
-    </Content>
-  </Container>
-  )
-}
-
+        <button onClick={handleSearch}>
+          <Image alt="search icon" src={searchIcon} width={24} height={24} />
+        </button>
+      </Content>
+    </Container>
+  );
+};
 export default SearchBar
 
 const Container = styled.div`
