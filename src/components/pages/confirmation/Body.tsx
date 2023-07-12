@@ -3,15 +3,16 @@ import styled from "styled-components";
 import Image from 'next/image'
 import Button from 'src/components/common/layout/buttons/Button'
 import sucessLottie from 'src/assets/images/sucessLottie.svg'
+import {useRouter} from "next/router";
 
-
-const Body = () => {
+const Body:React.FC = () => {
+  const router = useRouter()
   return (
     <Container>
       <Content>
         <h1>Compra Realizada com sucesso!</h1>
         <Image src={sucessLottie} alt={`success image`} width={295} height={307} />
-        <Button><p>VOLTAR</p></Button>
+        <Button onClick={()=>{router.push(`/`)}}><p>VOLTAR</p></Button>
       </Content>
     </Container>
 

@@ -22,6 +22,7 @@ export interface CartContextTypes{
   handleItemQuantityChange: (id: number, quantity: number) => void;
   handleDeleteItem: (id: number) => void;
   clearLocalStorage: () => void;
+  clearContext(): () => void;
 }
 
 interface Values {
@@ -144,6 +145,15 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     localStorage.removeItem("totalItems");
     localStorage.removeItem("subTotals");
     localStorage.removeItem("total");
+    localStorage.removeItem("shoppingCart")
+  }
+
+  function clearContext(){
+    setCart([])
+    setTotalItems(0)
+    setSubTotals([])
+    setTotal(0)
+    setAllow(false)
   }
 
   // useEffect(()=>{
@@ -168,6 +178,7 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     handleItemQuantityChange,
     handleDeleteItem,
     clearLocalStorage,
+    clearContext
   };
 
   return <CartContext.Provider value={cartState}>{children}</CartContext.Provider>;
