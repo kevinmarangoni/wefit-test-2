@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { useRouter } from "next/router";
 
 import CartButton from 'src/components/common/layout/buttons/CartButton'
 
@@ -8,11 +9,16 @@ interface HeaderProps {
 }
 
 const Header:React.FC<HeaderProps> = () => {
+  const router = useRouter();
+
+  const handleLogoClick = () => {
+    router.push("/");
+  };
   return (
     <Container>
       <Content>
         <Logo>
-          <h1>WeMovies</h1>
+          <h1 onClick={handleLogoClick}>WeMovies</h1>
         </Logo>
         <CartButton/>
       </Content>
@@ -35,8 +41,12 @@ const Content = styled.div`
 `
 
 const Logo = styled.div`
+  
   h1{
     font-size: ${props=> props.theme.color.font.size.xl};
+    :hover{
+      cursor: pointer;
+    }
   }
 `
 
