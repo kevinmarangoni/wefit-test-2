@@ -55,7 +55,6 @@ const CartItem:React.FC<Props> = ({item, handleItemQuantityChange, handleDeleteI
             <Image src={garbageIcon} alt={`garbage`} width={19} height={18} />
           </Delete>
       </Content>
-      <hr />
     </Container>
   )
 }

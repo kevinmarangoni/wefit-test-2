@@ -40,6 +40,9 @@ const Content = styled.div`
   align-items: center;
   flex-wrap: wrap;
   gap: 32px;
+  @media screen and (max-width: 768px) {
+      min-height: 500px;
+    }
   h1{
     color: #2F2E41;
     font-size: 20px;

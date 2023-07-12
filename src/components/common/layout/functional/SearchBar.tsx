@@ -1,6 +1,5 @@
 import React from 'react'
-import { useEffect, useState } from "react";
-import closeIcon from "src/assets/images/close.svg";
+import { useState } from "react";
 import searchIcon from "src/assets/images/search.svg";
 import Image from "next/image";
 import {useRouter} from "next/router";
