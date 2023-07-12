@@ -156,13 +156,6 @@ const CartProvider: React.FC<CartProps> = ({ children }) => {
     setAllow(false)
   }
 
-  // useEffect(()=>{
-  //   console.log("cart: ", cart)
-  //   console.log("totalItems: ", totalItems)
-  //   console.log("subTotals: ", subTotals)
-  //   console.log("total: ", total)
-  // },[cart, totalItems, subTotals, total])
-
   const cartState = {
     cart,
     setCart,

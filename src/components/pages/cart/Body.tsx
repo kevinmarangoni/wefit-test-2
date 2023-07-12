@@ -95,7 +95,6 @@ const Container = styled.div`
   margin: 10px;
   * {
     color: ${(props) => props.theme.color.font.secondary};
-    border: 1px dashed red;
   }
 `;
 

@@ -21,10 +21,6 @@ const Body: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log(hasFetch, data);
-  }, [hasFetch, data]);
-
-  useEffect(() => {
     if (!hasFetch) {
       getInitialList();
     }
