@@ -46,7 +46,7 @@ export const Item = ({ item }) => {
   );
 };
 
-const Container = styled.div`
+const Container = styled.div<any>`
   background-color: ${(props) =>
     props.backgroundColor ?? props.theme.color.secondary.main};
   width: ${(props) => props.width ?? "305px"};

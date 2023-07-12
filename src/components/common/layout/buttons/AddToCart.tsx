@@ -48,7 +48,7 @@ export const AddToCart: React.FC<AddToCartProps> = ({
 
   export default AddToCart;
 
-  const Element = styled.button`
+  const Element = styled.button<AddToCartProps>`
   background-color: ${(props) => props.backgroundColor ?? props.theme.color.highlight.main};
   width: ${(props) => props.width ?? "100%"};
   height: ${(props) => props.height ?? "40px"};

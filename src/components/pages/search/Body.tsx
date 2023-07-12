@@ -13,30 +13,25 @@ const Body: React.FC = () => {
   const {query} = router.query
   const [data, setData] = useState<Array<Item>>([]);
   const [hasFetch, setHasFetch] = useState<Boolean>(false);
-  const [searchQuery, setSearchQuery] = useState<String>('');
+  const [searchQuery, setSearchQuery] = useState<string>('');
 
   const getInitialList = async () => {
     if (query == undefined){
       return
     }
-    setSearchQuery(decodeURIComponent(query))
-    console.log(query)
-    const response = await ApiRequests.getItemByTitle(decodeURIComponent(query));
+    setSearchQuery(decodeURIComponent(query as string))
+    const response = await ApiRequests.getItemByTitle(decodeURIComponent(query as string));
     setData(response);
     if (data) {
       setHasFetch(true);
     }
   };
 
-
-
   useEffect(() => {
   if (!hasFetch) {
       getInitialList();
     }
   }, [hasFetch, query, searchQuery]);
-
-
 
   return (
     <>
@@ -86,7 +81,7 @@ margin-top: 24px;
 margin-bottom: 24px;
 `
 
-const ItemList = styled.div`
+const ItemList = styled.div<any>`
   height: 630px;
   display: flex;
   justify-content: ${(props:any) => (props.dataFound ? 'flex-start' : 'center')};

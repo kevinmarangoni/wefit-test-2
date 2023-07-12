@@ -39,7 +39,7 @@ const Button:React.FC<ButtonProps> = ({
   
   export default Button;
   
-  const Element = styled.button`
+  const Element = styled.button<ButtonProps>`
     background-color: ${(props) =>
       props.backgroundColor ?? props.theme.color.highlight.main};
     width: ${(props) => props.width ?? "207px"};

@@ -6,7 +6,6 @@ export const CartContext: React.Context<Object> = createContext<CartContextTypes
 interface CartProps {
   children?: React.ReactNode
 }
-
 export interface CartContextTypes{
   cart: Array<any>;
   setCart: React.Dispatch<React.SetStateAction<Array<any>>>;
@@ -23,11 +22,6 @@ export interface CartContextTypes{
   handleDeleteItem: (id: number) => void;
   clearLocalStorage: () => void;
   clearContext(): () => void;
-}
-
-interface Values {
-  subtotals: Array<any>
-  total: number
 }
 
 export interface Item {

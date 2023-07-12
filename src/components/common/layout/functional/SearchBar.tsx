@@ -1,10 +1,11 @@
 import React from 'react'
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import searchIcon from "src/assets/images/search.svg";
 import Image from "next/image";
 import {useRouter} from "next/router";
 import styled from "styled-components";
 import { Item } from "src/types/Item.d";
+import ApiRequests from "src/utils/api"
 
 interface Props {
     data?: Array<Item>
